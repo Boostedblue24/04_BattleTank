@@ -27,6 +27,8 @@ private:
 	// Start the barrel moving so that a shot would hit
 	// where the crosshair intersects the world.
 	void AimTowardsCrosshair();
+
+	bool GetSightRayHitLocation(FVector & HitLocation) const;
 };
 	
 
