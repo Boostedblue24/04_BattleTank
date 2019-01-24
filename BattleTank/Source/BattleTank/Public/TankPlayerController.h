@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
@@ -21,7 +20,7 @@ private:
 	
 	virtual void Tick(float DeltaTime) override;
 
-	ATank * GetControlledTank() const;
+	class ATank * GetControlledTank() const;
 
 	// Start the barrel moving so that a shot would hit
 	// where the crosshair intersects the world.
