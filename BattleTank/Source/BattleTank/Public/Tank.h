@@ -17,13 +17,18 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 	
-	void AimAt(FVector HitLocation);
+	
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel * BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret * TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
+	void AimAt(FVector HitLocation);
 
 private:
 	// Sets default values for this pawn's properties
@@ -33,7 +38,7 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere)
-	float LaunchSpeed = 100000.0f; //TODO Find reasonable projectile speed
+	float LaunchSpeed = 4000.0f; 
 
 protected:
 	// Called when the game starts or when spawned

@@ -14,7 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -28,7 +28,6 @@ void UTankAimingComponent::BeginPlay()
 	// ...
 	
 }
-
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
@@ -77,12 +76,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		MoveBarrelTowards(AimDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
 		auto Tank = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%f : %s found an aiming solution!"), Time, *Tank);
+		/// UE_LOG(LogTemp, Warning, TEXT("%f : %s found an aiming solution!"), Time, *Tank);
 	}
 	else
 	{
 		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("No solution found. :("), Time);
+		///UE_LOG(LogTemp, Warning, TEXT("No solution found. :("), Time);
 	}
 }
 
