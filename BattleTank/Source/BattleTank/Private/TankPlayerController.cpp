@@ -49,6 +49,12 @@ void ATankPlayerController::AimTowardsCrosshair()
 	{
 		GetControlledTank()->AimAt(HitLocation);
 	}
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		auto Tank = GetControlledTank()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%f : %s found no aiming solution!"), Time, *Tank);
+	}
 }
 
 // Get world location of linetrace through crosshair, true if hits landscape
