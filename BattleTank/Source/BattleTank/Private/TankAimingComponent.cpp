@@ -55,7 +55,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,
-		LaunchSpeed, /// Left out some default params after this
+		LaunchSpeed,
+		false,
+		0,
+		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	/// On successful firing solution computation, 
@@ -65,8 +68,14 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f : Aiming solution found!"), Time);
 	}
-	/// Else do nothing
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("No solution found. :("), Time);
+	}
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -74,7 +83,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
+	/// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
 	
 	Barrel->Elevate(5);
 

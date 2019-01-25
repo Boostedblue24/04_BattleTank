@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+class Tank;
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
