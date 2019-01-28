@@ -2,12 +2,14 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "GameFramework/Actor.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "Engine/World.h"
 
 class UTankAimingComponent;
+class UTankMovementComponent;
 
 // Sets default values
 ATank::ATank()
@@ -17,7 +19,6 @@ ATank::ATank()
 
 	/// No need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-
 }
 
 // Called when the game starts or when spawned
@@ -26,7 +27,6 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 	
 }
-
 
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -53,7 +53,7 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("FIRING!!!!"));
+	
 
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 	
@@ -66,7 +66,7 @@ void ATank::Fire()
 			);
 
 		Projectile->LaunchProjectile(LaunchSpeed);
-
+		UE_LOG(LogTemp, Warning, TEXT("FIRING!!!!"));
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
