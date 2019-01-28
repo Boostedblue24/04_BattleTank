@@ -18,7 +18,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/// Sets default values for this component's properties
 	UTankAimingComponent();
 
 	/// Setting references to both barrel and turret
@@ -29,7 +29,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
-	/// TODO Add Set Barrel Reference
+	
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

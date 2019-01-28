@@ -29,6 +29,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3.0f;
+
 	void AimAt(FVector HitLocation);
 
 private:
@@ -38,13 +41,15 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere)
-	float LaunchSpeed = 4000.0f; 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float LaunchSpeed = 6000.0f; 
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UTankBarrel * Barrel = nullptr; /// Local reference for spawning a projectile
+
+	double LastFireTime = 0;
 
 
 protected:
