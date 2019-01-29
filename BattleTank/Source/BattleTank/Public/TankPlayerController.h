@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "TankAimingComponent.h"
 #include "TankPlayerController.generated.h"
 
 /**
@@ -11,11 +12,24 @@
  */
 
 class Tank;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+
+	
+
+protected:
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank * GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent * AimCompRef);
 
 private:
 
@@ -23,10 +37,6 @@ private:
 	
 	virtual void Tick(float DeltaTime) override;
 
-	class ATank * GetControlledTank() const;
-
-	// Start the barrel moving so that a shot would hit
-	// where the crosshair intersects the world.
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector & HitLocation) const;
