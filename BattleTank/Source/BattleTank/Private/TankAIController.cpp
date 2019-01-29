@@ -23,12 +23,14 @@ void ATankAIController::Tick(float DeltaTime)
 	}
 	if (PlayerTank)
 	{
-		/// TODO Move towards player
+		/// Move towards player
+		MoveToActor(PlayerTank, AcceptanceRadius);
+
 
 		/// Aim towards player
 		AIControlledTank->AimAt(PlayerTank->GetActorLocation());
 		/// Fire if ready
-		//AIControlledTank->Fire(); /// TODO Don't fire every frame
+		//AIControlledTank->Fire(); 
 	}
 	
 }
