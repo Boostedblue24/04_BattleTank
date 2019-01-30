@@ -38,9 +38,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-	/// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	void AimAt(FVector HitLocation);
 
 protected:
@@ -55,9 +52,14 @@ private:
 	UTankTurret * Turret = nullptr;
 	UTankBarrel * Barrel = nullptr;
 	
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
+	bool IsBarrelMoving();
+
 	void MoveBarrelTowards(FVector AimDirection);
 	
 	double LastFireTime = 0;
+	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
