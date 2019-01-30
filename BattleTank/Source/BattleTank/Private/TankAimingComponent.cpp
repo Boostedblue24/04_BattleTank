@@ -44,11 +44,8 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!Barrel) { UE_LOG(LogTemp, Warning, TEXT("Debug Check AimingComponent Barrel Not Found")); return; }
-	if (!Turret) { UE_LOG(LogTemp, Warning, TEXT("Debug Check AimingComponent Turret Not Found")); return; }
-
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
@@ -71,8 +68,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);
+		MoveBarrelTowards(AimDirection);	
 	}
+
 	
 }
 

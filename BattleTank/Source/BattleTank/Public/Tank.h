@@ -9,7 +9,6 @@
 
 class TankBarrel;
 class TankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -25,10 +24,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
 
-	void AimAt(FVector HitLocation);
-
 	UTankBarrel * Barrel = nullptr; // TODO Remove once Firing is moved from Tank to Aiming Component
 
+	
 
 private:
 	// Sets default values for this pawn's properties
@@ -37,17 +35,14 @@ private:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float LaunchSpeed = 6000.0f; 
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	double LastFireTime = 0;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float LaunchSpeed = 6000.0f;
+	
 
 protected:
-	
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent * TankAimingComponent = nullptr;
 	
 };

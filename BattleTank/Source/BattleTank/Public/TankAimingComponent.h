@@ -37,9 +37,9 @@ public:
 	/// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
-	UTankBarrel * Barrel = nullptr;
+	
 	
 protected:
 	// Called when the game starts
@@ -50,8 +50,11 @@ protected:
 
 private:
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float LaunchSpeed = 6000.0f;
 	
 	UTankTurret * Turret = nullptr;
+	UTankBarrel * Barrel = nullptr;
 	
 	void MoveBarrelTowards(FVector AimDirection);
 		

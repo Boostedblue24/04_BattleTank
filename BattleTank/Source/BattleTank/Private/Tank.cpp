@@ -2,9 +2,9 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
-#include "GameFramework/Actor.h"
-#include "TankBarrel.h"
 #include "Projectile.h"
+#include "TankBarrel.h"
+#include "GameFramework/Actor.h"
 #include "Engine/World.h"
 
 class UTankAimingComponent;
@@ -20,14 +20,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); /// Needed for Blueprint 
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
