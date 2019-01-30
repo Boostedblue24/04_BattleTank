@@ -10,8 +10,6 @@
 
 class UTankAimingComponent;
 
-
-
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
