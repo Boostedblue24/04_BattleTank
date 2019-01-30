@@ -17,11 +17,7 @@ void ATankAIController::Tick(float DeltaTime)
 	
 	auto AIControlledTank = Cast<ATank>(GetPawn());
 	
-	if (!PlayerTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI Controller found no Player Tanks!"));
-	}
-	if (PlayerTank)
+	if (ensure(PlayerTank))
 	{
 		/// Move towards player
 		MoveToActor(PlayerTank, AcceptanceRadius);
