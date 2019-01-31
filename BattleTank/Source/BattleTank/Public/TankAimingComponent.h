@@ -13,7 +13,8 @@ enum class EFiringState : uint8
 {
 	Locked,
 	Aiming,
-	Reloading
+	Reloading,
+	OutOfAmmo
 };
 
 
@@ -39,6 +40,9 @@ public:
 	void Fire();
 
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
 
 	EFiringState GetFiringState() const;
 
@@ -68,6 +72,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float LaunchSpeed = 6000.0f;
+
+	int RoundsLeft = 3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
