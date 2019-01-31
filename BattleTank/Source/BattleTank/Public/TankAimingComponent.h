@@ -42,7 +42,7 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetRoundsLeft() const;
+	int32 GetRoundsLeft() const;
 
 	EFiringState GetFiringState() const;
 
@@ -73,7 +73,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float LaunchSpeed = 6000.0f;
 
-	int RoundsLeft = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 RoundsLeft = 3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;

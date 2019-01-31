@@ -7,6 +7,11 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
+class UProjectileMovementComponent;
+class UStaticMeshComponent;
+class UParticleSystemComponent;
+
+
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
 {
@@ -16,7 +21,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	class UProjectileMovementComponent * ProjectileMovement = nullptr;
+	UProjectileMovementComponent * ProjectileMovement = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent * CollisionMesh = nullptr;
+	UParticleSystemComponent * LaunchBlast = nullptr;
 
 public:	
 	// Called every frame
