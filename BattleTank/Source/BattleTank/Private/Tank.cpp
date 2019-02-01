@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/DamageType.h"
 #include "Engine/World.h"
 
 class UTankAimingComponent;
@@ -20,6 +21,20 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); /// Needed for Blueprint 
+}
+
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController* EventInstigator, AActor * DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	auto DamageToApply = FMath::Clamp<float>(DamagePoints, 0, CurrentHealth);
+
+	CurrentHealth -= DamageToApply;
+	if (CurrentHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Tank Died!"));
+	}
+
+	return DamageToApply;
 }
 
 

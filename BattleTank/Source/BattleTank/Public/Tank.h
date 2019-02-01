@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/DamageType.h"
 #include "Tank.generated.h" /// Put new includes above
 
 
@@ -15,12 +17,21 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 
-	 
+	/// Called by the engine when Actor Damage is dealt
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DmaageEvent, class AController* EventInstigator, AActor * DamageCauser) override;
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
 
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 StartingHealth = 100;
+
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	int32 CurrentHealth = StartingHealth;
+
 
 protected:
 	
