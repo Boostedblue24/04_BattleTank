@@ -44,6 +44,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetRoundsLeft() const;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
 	EFiringState GetFiringState() const;
 
 protected:
@@ -53,8 +56,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float LaunchSpeed = 6000.0f;
