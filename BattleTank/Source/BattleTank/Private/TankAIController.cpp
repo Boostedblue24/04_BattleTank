@@ -6,6 +6,7 @@
 #include "Tank.h"
 #include "Runtime/Engine/Classes/GameFramework/Controller.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Pawn.h"
 #include "Engine/World.h"
 
 void ATankAIController::BeginPlay() {Super::BeginPlay();}
@@ -52,6 +53,10 @@ void ATankAIController::SetPawn(APawn * InPawn)
 
 void ATankAIController::OnPossessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Received Death Command"));
+	if (!ensure(GetPawn())) { return; }
+	
+	GetPawn()->DetachFromControllerPendingDestroy();
+	
+	UE_LOG(LogTemp, Warning, TEXT("AI Tank Died"));
 }
 
