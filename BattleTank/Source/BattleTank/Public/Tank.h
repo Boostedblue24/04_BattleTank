@@ -10,6 +10,8 @@
 #include "Tank.generated.h" /// Put new includes above
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+class AProjectile;
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
