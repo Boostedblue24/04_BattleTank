@@ -1,60 +1,57 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankTrack.h"
+#include "SprungWheel.h"
+#include "SpawnPoint.h"
 
 
-UTankTrack::UTankTrack()
+UTankTrack::UTankTrack() {PrimaryComponentTick.bCanEverTick = false;}
+
+void UTankTrack::BeginPlay() {Super::BeginPlay();}
+
+TArray<ASprungWheel*> UTankTrack::GetWheels() const
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	TArray<ASprungWheel*> ResultArray;
+
+	TArray<USceneComponent*> Children;
+
+	GetChildrenComponents(true, Children);
+
+	for (USceneComponent * Child : Children)
+	{
+		auto SpawnPointChild = Cast<USpawnPoint>(Child);	
+		if (!SpawnPointChild) continue;
+
+		AActor * SpawnedChild = SpawnPointChild->GetSpawnedActor();
+		auto SprungWheel = Cast<ASprungWheel>(SpawnedChild);
+		if (!SprungWheel) continue;
+
+		ResultArray.Add(SprungWheel);
+	}
+
+	return ResultArray;
 }
 
-void UTankTrack::BeginPlay()
-{
-	Super::BeginPlay();
-
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
-}
-
-void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
-{
-	///Drive tracks
-	DriveTrack();
-	///Apply sideways force
-	ApplySidewaysForce();
-	/// Reset throttle
-	CurrentThrottle = 0.0f;
-}
-
-
-void UTankTrack::ApplySidewaysForce()
-{
-	/// Calculate slippage speed (cross product)
-	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-	/// Work out the required acceleration this frame in order to correct slippage
-	auto DeltaTime = GetWorld()->GetDeltaSeconds();
-	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
-	/// Calculate and apply sideways force
-	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-
-	auto CorrectionForce = TankRoot->GetMass() * CorrectionAcceleration / 2; /// divided by two because of dual tracks
-
-	TankRoot->AddForce(CorrectionForce);
-}
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+	float CurrentThrottle = FMath::Clamp<float>(Throttle, -1, 1);
+
+	///Drive tracks
+	DriveTrack(CurrentThrottle);
 }
 
-void UTankTrack::DriveTrack()
+void UTankTrack::DriveTrack(float CurrentThrottle)
 {
-	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
+	auto ForceApplied = CurrentThrottle * TrackMaxDrivingForce;
 
-	auto ForceLocation = GetComponentLocation();
+	auto Wheels = GetWheels();
 
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	auto ForcePerWheel = ForceApplied / Wheels.Num();
 
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-
+	for (ASprungWheel * Wheel : Wheels)
+	{
+		Wheel->AddDrivingForce(ForcePerWheel);
+	}
 }
 
