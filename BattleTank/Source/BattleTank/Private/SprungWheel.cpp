@@ -10,12 +10,17 @@ ASprungWheel::ASprungWheel()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Physics Constraint"));
-	SetRootComponent(MassWheelConstraint);
+	MassAxleConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Tank Axle Constraint"));
+	SetRootComponent(MassAxleConstraint);
 
-	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
-	Wheel->SetupAttachment(MassWheelConstraint);
+	Axle = CreateDefaultSubobject<UStaticMeshComponent>(FName("Axle"));
+	Axle->SetupAttachment(MassAxleConstraint);
 
+	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Axle Wheel Constraint"));
+	AxleWheelConstraint->SetupAttachment(Axle);
+
+	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Main Wheel"));
+	Wheel->SetupAttachment(AxleWheelConstraint);
 	
 
 }
@@ -37,8 +42,15 @@ void ASprungWheel::SetupConstraint()
 
 	if (!BodyRoot) { return; }
 
-	MassWheelConstraint->SetConstrainedComponents(
+	MassAxleConstraint->SetConstrainedComponents(
 		BodyRoot,
+		NAME_None,
+		Axle,
+		NAME_None
+	);
+
+	AxleWheelConstraint->SetConstrainedComponents(
+		Axle,
 		NAME_None,
 		Wheel,
 		NAME_None

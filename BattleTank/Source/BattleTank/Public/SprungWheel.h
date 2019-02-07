@@ -25,11 +25,16 @@ protected:
 
 	// Components
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UPhysicsConstraintComponent * MassWheelConstraint = nullptr;
+	UPhysicsConstraintComponent * MassAxleConstraint = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent * AxleWheelConstraint = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent * Axle = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent * Wheel = nullptr;
-
 	
 
 	
