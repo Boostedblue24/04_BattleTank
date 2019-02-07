@@ -28,9 +28,6 @@ protected:
 	UPhysicsConstraintComponent * MassWheelConstraint = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent * Mass = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent * Wheel = nullptr;
 
 	
@@ -39,5 +36,6 @@ protected:
 
 private:	
 
+	void SetupConstraint();
 
 };
